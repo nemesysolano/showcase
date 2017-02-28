@@ -307,3 +307,30 @@ Caused by: java.io.IOException: Packing cancelled during objects writing
 	at org.eclipse.jgit.transport.BasePackPushConnection.writePack(BasePackPushConnection.java:320)
 	at org.eclipse.jgit.transport.BasePackPushConnection.doPush(BasePackPushConnection.java:200)
 	... 8 more
+!SESSION 2017-02-28 17:41:19.521 -----------------------------------------------
+eclipse.buildId=4.6.2.M20161124-1400
+java.fullversion=JRE 1.8.0 IBM J9 2.8 Linux amd64-64 Compressed References 20160915_318796 (JIT enabled, AOT enabled)
+J9VM - R28_Java8_SR3_20160915_0912_B318796
+JIT  - tr.r14.java.green_20160818_122998
+GC   - R28_Java8_SR3_20160915_0912_B318796_CMPRSS
+J9CL - 20160915_318796
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.eclipse.jface.text 2 0 2017-02-28 17:42:09.697
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.number'
+
+!ENTRY org.eclipse.jface.text 2 0 2017-02-28 17:42:09.700
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.round'
+
+!ENTRY org.tigris.subversion.clientadapter.javahl 1 0 2017-02-28 17:42:43.695
+!MESSAGE Failed to load JavaHL Library.
+These are the errors that were encountered:
+libsvnjavahl-1 (Not found in java.library.path)
+svnjavahl-1 (Not found in java.library.path)
+svnjavahl (Not found in java.library.path)
+java.library.path = /opt/ibm/java-x86_64-80/jre/lib/amd64/compressedrefs:/opt/ibm/java-x86_64-80/jre/lib/amd64:/u01/app/oracle/product/12.1.0/db_1/lib:/lib:/usr/lib:/usr/lib64:/usr/lib
+
+!ENTRY org.eclipse.mylyn.tasks.ui 2 0 2017-02-28 17:42:48.890
+!MESSAGE Repository link provider took over 5000 ms to execute and was timed out: "[org.tigris.subversion.subclipse.mylyn.SubclipseTaskRepositoryLinkProvider@1879e510]"
