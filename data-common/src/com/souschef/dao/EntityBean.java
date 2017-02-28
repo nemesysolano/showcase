@@ -2,6 +2,12 @@ package com.souschef.dao;
 
 import java.io.Serializable;
 
+/**
+ * <p>This generic class define the common features present in all entity beans</p>
+ * @author rsolano
+ *
+ * @param <I>
+ */
 public abstract class EntityBean<I extends Serializable> implements Serializable{
 
 	/**
