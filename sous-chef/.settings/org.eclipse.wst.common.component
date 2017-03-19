@@ -11,9 +11,6 @@
         <dependent-module archiveName="data-common.jar" deploy-path="/lib" handle="module:/resource/data-common/data-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="domain-data.jar" deploy-path="/lib" handle="module:/resource/domain-data/domain-data">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="domain-ejb.jar" deploy-path="/" handle="module:/resource/domain-ejb/domain-ejb">
             <dependent-object>Module_1486695472736</dependent-object>
             <dependency-type>uses</dependency-type>
@@ -64,6 +61,12 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="geronimo-jta_1.1_spec-1.1.1.jar" deploy-path="/lib" handle="module:/classpath/lib/sous-chef/lib/hibernate-5.2.7/geronimo-jta_1.1_spec-1.1.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="domain-data-dao.jar" deploy-path="/lib" handle="module:/resource/domain-data-dao/domain-data-dao">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="domain-data-model.jar" deploy-path="/lib" handle="module:/resource/domain-data-model/domain-data-model">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

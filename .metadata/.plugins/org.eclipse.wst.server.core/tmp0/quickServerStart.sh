@@ -1,6 +1,6 @@
 #!/bin/sh
 # /home/rsolano/Documents/workspaces/showcase/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/quickServerStart.sh
-# Generated: Tue Feb 28 16:26:41 AST 2017
+# Generated: Sun Mar 19 12:04:32 AST 2017
 
 # Bootstrap values ...
 binDir=/opt/IBM/WebSphere/AppServer/profiles/AppSrv01/bin

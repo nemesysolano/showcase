@@ -1,26 +1,35 @@
 package com.souschef.domain.model;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+
+import org.junit.BeforeClass;
 import org.junit.runner.*;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import com.souschef.domain.data.model.Component;
 import com.souschef.domain.data.model.ComponentCategory;
+import com.souschef.domain.data.model.Ingredient;
+import com.souschef.domain.data.model.Recype;
 import com.souschef.domain.data.model.Unit;
 
 @RunWith(Suite.class) //718-065-089
 @SuiteClasses(
-	{
-		ComponentManagerTest.class
+	{		
+		ComponentManagerTest.class,
+		RecypeManagerTest.class
 	}
 )
-public class DomainModelTestSuite {
+public class DomainModelTestSuite  {
 	public static String PERSISTENCE_UNIT_NAME="domain-model-test";
 	public static ComponentCategory[] componentCategories = {
 		new ComponentCategory("meat", "Meat"),
@@ -37,8 +46,8 @@ public class DomainModelTestSuite {
 	};
 	
 	public static Map<String, Component[]> componentMap = new HashMap<String, Component[]>();
-	
-	static {
+
+	private static void createComponentsData() {		
 		componentMap.put(
 			"Meat",
 			new Component[]{
@@ -133,7 +142,8 @@ public class DomainModelTestSuite {
 				new Component("Ground Pepper", Unit.KILOGRAM, 8, 6),
 				new Component("Coriander", Unit.KILOGRAM, 8, 6),
 				new Component("Cinnamon", Unit.KILOGRAM, 8, 6),
-				new Component("Saffron", Unit.KILOGRAM, 8, 6)
+				new Component("Saffron", Unit.KILOGRAM, 8, 6),
+				new Component("Teriyaki Sausage", Unit.LITRE, 8, 6)
 			}				
 		);		
 		
@@ -145,9 +155,49 @@ public class DomainModelTestSuite {
 					new Component("Orange", Unit.KILOGRAM, 8, 6),
 					new Component("Strawberry", Unit.KILOGRAM, 8, 6)
 				}				
-			);		
+			);
 	}
 	
+	public static Recype[] recypes;
+	
+	public static void createRecypes() throws IOException {
+		class IngredientList extends ArrayList<Ingredient> {
+
+			private static final long serialVersionUID = 4435788361663906076L;
+
+			public IngredientList append(Ingredient e) {
+				super.add(e);
+				return this;
+			}
+			
+		}
+		recypes = new Recype[] {
+			new Recype(
+				"Roasted Ribs", 
+				1, 
+				new File("images/roasted-ribs.jpg"),
+				(new IngredientList()).append(
+					new Ingredient(2, new Component("Salt"), Unit.GRAM)
+				).append(
+					new Ingredient(1, new Component("Rib"), Unit.KILOGRAM)
+				).append(
+					new Ingredient(3, new Component("Ground Pepper"), Unit.GRAM)
+				).append(
+					new Ingredient(6, new Component("Rib"), Unit.GRAM)
+				).append(
+					new Ingredient(0.25, new Component("Teriyaki Sausage"), Unit.LITRE)
+				)
+								
+			)
+		};
+	}
+    @BeforeClass
+    public static void beforeClass() throws IOException {
+    	createComponentsData();  
+    	createRecypes();
+    }
+	
+    
 	public static void clearDatabase() throws ClassNotFoundException, SQLException {
 		Connection connection;
 		Statement statement;

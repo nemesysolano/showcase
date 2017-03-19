@@ -18,4 +18,7 @@ public interface ComponentManager {
 	Component findComponentById(String id) throws ClientException;
 	void removeComponent(String id) throws ClientException;
 	
+	
+	Component findComponentByName(String name) throws ClientException;
+	
 }

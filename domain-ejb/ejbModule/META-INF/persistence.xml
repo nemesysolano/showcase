@@ -10,6 +10,8 @@
 		<jta-data-source>jdbc/SOUSCHEF</jta-data-source>
 		<class>com.souschef.domain.data.model.ComponentCategory</class>
 		<class>com.souschef.domain.data.model.Component</class>
+		<class>com.souschef.domain.data.model.Recype</class>
+		<class>com.souschef.domain.data.model.Ingredient</class>
 		<validation-mode>NONE</validation-mode>
 			 
 		<!-- http://www-01.ibm.com/support/docview.wss?uid=swg1PM26361 -->

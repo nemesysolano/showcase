@@ -12,6 +12,8 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.LockTimeoutException;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PessimisticLockException;
 import javax.persistence.Query;
 import javax.persistence.QueryTimeoutException;
@@ -102,6 +104,43 @@ public class BasicDAO<I extends Serializable, E extends EntityBean<I>> extends D
 			list = query.getResultList();
 			return list;
 		}catch(IllegalStateException  e) {
+			throw new DAOException(e);
+		}
+		catch(QueryTimeoutException e){
+			throw new DAOException(e);
+		}
+		catch(TransactionRequiredException e) {
+			throw new DAOException(e);
+		}
+		catch(PessimisticLockException e){
+			throw new DAOException(e);
+		}
+		catch(LockTimeoutException e){
+			throw new DAOException(e);
+		}
+		catch(ArgumentException e){
+			throw new DAOException(e);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public E single(EntityManager entityManager, String queryName, Map<String, Object> parameters) throws DAOException{
+		try{ 
+			Query query = entityManager.createNamedQuery(queryName);
+						
+			if(parameters != null ){
+				for(Entry<String,Object> entry: parameters.entrySet()){
+					query.setParameter(entry.getKey(), entry.getValue());
+				}
+			}
+			return (E) query.getSingleResult();
+		}
+		catch(NoResultException  e) {
+			return null;
+		}catch(NonUniqueResultException  e){
+			throw new DAOException(e);
+		}
+		catch(IllegalStateException  e) {
 			throw new DAOException(e);
 		}
 		catch(QueryTimeoutException e){

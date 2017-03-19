@@ -4,8 +4,6 @@ import java.util.List;
 
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import com.souschef.client.ClientException;
 import com.souschef.dao.DAOException;
@@ -15,13 +13,13 @@ import com.souschef.domain.data.model.Component;
 import com.souschef.domain.data.model.ComponentCategory;
 
 
-public class ComponentManagerImpl implements ComponentManager{
+public class ComponentManagerImpl extends DAOWrapperClient implements ComponentManager{
 	
 	protected ComponentCategoryDAO componentCategoryDAO;		
 	protected ComponentDAO componentDAO;
-	private EntityManagerFactory entityManagerFactory;
 	
 	public ComponentManagerImpl() {
+		super();
 		try {
 			componentCategoryDAO = new ComponentCategoryDAO(getEntityManagerFactory());
 			componentDAO = new ComponentDAO(getEntityManagerFactory());
@@ -30,12 +28,6 @@ public class ComponentManagerImpl implements ComponentManager{
 		}
 	}
 	
-
-	protected EntityManagerFactory getEntityManagerFactory() {
-		if(entityManagerFactory == null)
-			entityManagerFactory = Persistence.createEntityManagerFactory("domain-model-test");
-		return entityManagerFactory;
-	}
 
 	
 	@Override
@@ -138,6 +130,20 @@ public class ComponentManagerImpl implements ComponentManager{
 		}catch(DAOException e){
 			throw new ClientException(e);
 		}		
+	}
+
+
+
+	@Override
+	public Component findComponentByName(String name) throws ClientException {
+		Component component;
+		EntityManager entityManager = getEntityManagerFactory().createEntityManager();
+		try{
+			component = componentDAO.findComponentByName(entityManager, name);
+			return component;
+		}catch(DAOException e){
+			throw new ClientException(e);
+		}	
 	}
 
 	
