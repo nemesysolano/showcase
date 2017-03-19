@@ -10,5 +10,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/domain-data-model"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/domain-client"/>
 	<classpathentry kind="lib" path="/domain-ejb/domain-ejb-client.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LOG4J"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

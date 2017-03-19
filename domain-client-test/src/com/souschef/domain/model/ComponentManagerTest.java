@@ -11,6 +11,8 @@ Copy the thin client into local machine if you want to invoke session beans and 
 import java.util.List;
 import javax.naming.NamingException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -22,6 +24,8 @@ import com.souschef.ejb.client.DomainClientFactory;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class ComponentManagerTest {
+	Logger logger = LogManager.getLogger(ComponentManagerTest.class);
+	
 	DomainClientFactory domainClientFactory;
 	ComponentManager componentManager;
 	public ComponentManagerTest() throws NamingException {
@@ -33,25 +37,33 @@ public class ComponentManagerTest {
 	public void clearAll() {
 		List<ComponentCategory> categories = componentManager.allComponentCategories();
 		
+		logger.debug("clearAll START");
+		
 		for(ComponentCategory category: categories) {
 			List<Component> components = componentManager.componentsByCategoryId(category.getId());
-			System.out.printf("Category=%s\n",category.getName());
-			for(Component component: components) {
-				System.out.printf("\tComponent=%s\n",component.getName());
+			
+			for(Component component: components) {				
 				componentManager.removeComponent(component.getId());
+				logger.debug(String.format("'%s' component removed", component.getName()));
 			}
 			componentManager.removeComponentCategory(category.getId());
+			logger.debug(String.format("'%s' category removed", category.getName()));
 		}
+		
+		logger.debug("clearAll END");
 	}
 	
 	/* */
 	@Test
 	public void createComponentCategories() {
+		logger.debug("createComponentCategories START");
 		
 		for(ComponentCategory componentCategory: DomainModelTestSuite.componentCategories) {			
 			componentManager.saveComponentCategory(componentCategory);
+			logger.debug(String.format("'%s' category created", componentCategory.getName()));
 		}
 		
+		logger.debug("createComponentCategories START");
 	}	
 	
 		
@@ -60,6 +72,8 @@ public class ComponentManagerTest {
 	public void createComponents() {
 		List<ComponentCategory> categories = componentManager.allComponentCategories();
 
+		logger.debug("createComponents START");
+		
 		for(ComponentCategory category: categories) {
 			try {
 				Component components[] = DomainModelTestSuite.componentMap.get(category.getName());
@@ -67,12 +81,15 @@ public class ComponentManagerTest {
 					component.setCategory(category);
 					componentManager.saveComponent(component);		
 					componentManager.findComponentByName(component.getName()).getId();
+					logger.debug(String.format("'%s' category created", component.getName()));
 				}
 			}catch(NullPointerException e) {
 				throw new NullPointerException(category.getName());
 			}
 			
 		}
+		
+		logger.debug("createComponents END");
 	}
 	
 
