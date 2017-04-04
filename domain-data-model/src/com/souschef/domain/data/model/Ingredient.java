@@ -13,10 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import com.souschef.dao.EntityBean;
 
 @Entity
 @Table(name = "INGREDIENT")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "recipe"})
 public class Ingredient extends EntityBean<String>{
 	/**
 	 * 
@@ -30,13 +33,13 @@ public class Ingredient extends EntityBean<String>{
 	@Column(name="AMOUNT")
 	double amount;
 	
-	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH}, fetch=FetchType.EAGER)
+	@ManyToOne(cascade={CascadeType.MERGE, CascadeType.REFRESH}, fetch=FetchType.EAGER)
 	@JoinColumn(name="COMPONENT_ID")		
 	Component component;
 
-	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH}, fetch=FetchType.LAZY)
+	@ManyToOne(cascade={CascadeType.REFRESH}, fetch=FetchType.LAZY)
 	@JoinColumn(name="RECYPE_ID")
-	private Recype recype;
+	private Recipe recipe;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="UNIT")
@@ -45,12 +48,18 @@ public class Ingredient extends EntityBean<String>{
 	public Ingredient() {
 		
 	}
-	public Ingredient(double amount, Component component, Unit unit) {
+	
+	public Ingredient(String id, double amount, Component component, Unit unit) {
 		super();
-		this.id = UUID.randomUUID().toString().replace(Constants.DASH, Constants.EMPTY_STRING);
+		this.id = id;
 		this.amount = amount;
 		this.component = component;
 		this.unit = unit;
+	}
+	
+	public Ingredient(double amount, Component component, Unit unit) {
+		this(UUID.randomUUID().toString().replace(Constants.DASH, Constants.EMPTY_STRING), amount, component, unit);
+
 	}
 
 	public String getId() {
@@ -83,11 +92,11 @@ public class Ingredient extends EntityBean<String>{
 		this.unit = unit;
 	}
 	
-	public Recype getRecype() {
-		return recype;
+	public Recipe getRecipe() {
+		return recipe;
 	}
-	public void setRecype(Recype recype) {
-		this.recype = recype;
+	public void setRecipe(Recipe recipe) {
+		this.recipe = recipe;
 	}
 	@Override
 	public int hashCode() {
@@ -98,7 +107,7 @@ public class Ingredient extends EntityBean<String>{
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((component == null) ? 0 : component.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((recype == null) ? 0 : recype.hashCode());
+		result = prime * result + ((recipe == null) ? 0 : recipe.hashCode());
 		result = prime * result + ((unit == null) ? 0 : unit.hashCode());
 		return result;
 	}
@@ -124,10 +133,10 @@ public class Ingredient extends EntityBean<String>{
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (recype == null) {
-			if (other.recype != null)
+		if (recipe == null) {
+			if (other.recipe != null)
 				return false;
-		} else if (!recype.equals(other.recype))
+		} else if (!recipe.equals(other.recipe))
 			return false;
 		if (unit != other.unit)
 			return false;

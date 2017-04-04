@@ -8,6 +8,7 @@ import com.souschef.dao.*;
 import com.souschef.domain.data.model.ComponentCategory;
 
 public class ComponentCategoryDAO extends BasicDAO<String, ComponentCategory> {	
+	
 	public ComponentCategoryDAO(EntityManagerFactory entityManagerFactory) {
 		super(entityManagerFactory);
 	}

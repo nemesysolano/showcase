@@ -112,6 +112,12 @@ public class Bean2JSONEncoder extends JSONEncoder{
 			throw new JSONEncodingException(e);		}
 	}
 
+	public String encode(Object bean)throws JSONEncodingException {
+		StringBuilder string = new StringBuilder();
+		encode(bean, string);
+		return string.toString();
+	}
+	
 	/**
 	 *<p>Test whether <code>bean</code> represents an atomic (java.lang.String, java.util.Date, a primitive or a primitive wrapper) value</p>
 	 * @param bean Non null object reference.
@@ -256,12 +262,10 @@ public class Bean2JSONEncoder extends JSONEncoder{
 		writer.write('"');
 		writer.write(propertyName);
 		writer.write("\":");
-		try{
-			//TODO: Encode class name.
-			value = method.invoke(bean);			
-		}catch(java.lang.IllegalArgumentException e){
-			throw e;
-		}
+		
+		//TODO: Encode class name.
+		value = method.invoke(bean);			
+	
 		this.encode(value, writer, classesCache);									
 	}
 	
@@ -421,6 +425,7 @@ public class Bean2JSONEncoder extends JSONEncoder{
 		
 	}
 
+	
 
 	/**
 	 * Returns name of the extra field element to each object (javascript hash) to indicate the java class of the encoded object.

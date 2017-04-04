@@ -8,17 +8,17 @@ import javax.persistence.EntityManagerFactory;
 import com.souschef.dao.BasicDAO;
 import com.souschef.dao.DAOException;
 import com.souschef.domain.data.model.Ingredient;
-import com.souschef.domain.data.model.Recype;
+import com.souschef.domain.data.model.Recipe;
 
 
-public class RecypeDAO extends BasicDAO<String, Recype> {
+public class RecipeDAO extends BasicDAO<String, Recipe> {
 
-	public RecypeDAO(EntityManagerFactory entityManagerFactory) {
+	public RecipeDAO(EntityManagerFactory entityManagerFactory) {
 		super(entityManagerFactory);
 	}
 
 	@Override
-	public void persist(EntityManager entityManager, Recype entity) throws DAOException {
+	public void persist(EntityManager entityManager, Recipe entity) throws DAOException {
 		List<Ingredient> ingredients = entity.getIngredients();
 		
 		if(ingredients == null || ingredients.size() == 0) {
@@ -26,9 +26,13 @@ public class RecypeDAO extends BasicDAO<String, Recype> {
 		}
 		
 		for(Ingredient ingredient: ingredients) {
-			ingredient.setRecype(entity);
+			ingredient.setRecipe(entity);
 		}
 		super.persist(entityManager, entity);
 	}
+	
+	public List<Recipe> allRecipes(EntityManager entityManager) throws DAOException {
+		return (List<Recipe>)all(entityManager, "Recype.all");
+	}	
 
 }

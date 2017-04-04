@@ -18,7 +18,7 @@ public class ComponentDAO extends BasicDAO<String, Component>{
 	}
 
 	public Component findComponentByName(EntityManager entityManager, String name) {
-		return single(
+		return exists(
 			entityManager, 
 			"Component.byName", 
 			(new ParameterMap()).append("name", name)

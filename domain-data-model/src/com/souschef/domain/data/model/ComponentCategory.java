@@ -8,6 +8,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import com.souschef.dao.EntityBean;
 
 
@@ -19,6 +21,7 @@ import com.souschef.dao.EntityBean;
 	      query="SELECT c from ComponentCategory c")
 	}
 )
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ComponentCategory extends EntityBean<String>{
 	
 	/**

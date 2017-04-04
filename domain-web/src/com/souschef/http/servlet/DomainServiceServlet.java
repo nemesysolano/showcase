@@ -7,7 +7,9 @@ import javax.ejb.EJB;
 
 import com.souschef.client.ClientException;
 import com.souschef.domain.client.ComponentManager;
+import com.souschef.domain.client.RecipeManager;
 import com.souschef.domain.data.model.ComponentCategory;
+import com.souschef.domain.data.model.Recipe;
 import com.souschef.domain.data.model.Component;
 
 /**
@@ -17,7 +19,9 @@ public class DomainServiceServlet extends ServiceServlet {
 	private static final long serialVersionUID = 1L;
 	@EJB(beanName="ComponentManagerLocalBean")
 	ComponentManager componentManager;
-    
+   
+	@EJB(beanName="RecipeManagerLocalBean")
+	RecipeManager recipeManager;	
 
     @EndPoint(path="/component-category/all")
     public List<ComponentCategory> allCategories(RequestContext request) throws ClientException{
@@ -26,9 +30,8 @@ public class DomainServiceServlet extends ServiceServlet {
     }
 
     @EndPoint(path="/component/by-category/\\S+")
-    public List<Component> componentsByCategory(RequestContext request) throws ClientException{
-    	String uri = request.getUri();
-    	String id  = uri.substring(uri.lastIndexOf('/')+1);
+    public List<Component> componentsByCategory(RequestContext request) throws ClientException{    	
+    	String id  = request.getUriParts()[2]; //0->component, 1->by-category, 2->\\S+
     	List<Component> categories = componentManager.componentsByCategoryId(id);
     	return categories;
     }    
@@ -39,4 +42,9 @@ public class DomainServiceServlet extends ServiceServlet {
     	return request.getBean();
     } 
     
+    @EndPoint(path="/recype/all")
+    public List<Recipe> allRecipes(RequestContext request) throws ClientException{    	
+    	List<Recipe> recipes = recipeManager.allRecipes();
+    	return recipes;
+    }    
 }

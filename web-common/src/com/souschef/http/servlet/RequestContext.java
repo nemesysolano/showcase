@@ -15,6 +15,8 @@ public class RequestContext implements Serializable{
 	
 	String path;
 	
+	String uriParts[];
+	
 	public RequestContext() {
 		
 	}
@@ -29,8 +31,15 @@ public class RequestContext implements Serializable{
 		return uri;
 	}
 
+	
 
 	public void setUri(String uri) {
+		if(uri == null) {
+			uriParts = null;
+		}
+		
+		String relativeUri = uri.substring(uri.indexOf(path)+path.length()+1);
+		uriParts = relativeUri.split("\\/");
 		this.uri = uri;
 	}
 
@@ -42,6 +51,11 @@ public class RequestContext implements Serializable{
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+
+	public String[] getUriParts() {
+		return uriParts;
 	}
 
 	

@@ -17,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import com.souschef.dao.EntityBean;
 
@@ -31,6 +32,7 @@ import com.souschef.dao.EntityBean;
 		      query="SELECT c from Component c WHERE c.name = :name")		
 	}
 )
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "category"})
 public class Component extends EntityBean<String> {
 
 	/**
@@ -44,7 +46,7 @@ public class Component extends EntityBean<String> {
 	private String id;
 	
 	
-	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH}, fetch=FetchType.EAGER)
+	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH}, fetch=FetchType.LAZY)
 	@JoinColumn(name="COMPONENT_CATEGORY_ID")
 	private ComponentCategory category;
 	
@@ -74,6 +76,12 @@ public class Component extends EntityBean<String> {
 	public Component(String name) {
 		this.name = name;
 	}
+	
+	public Component(String id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+	
 	
 	public Component(String name, Unit packageUnit, int packageSize, int stock) {
 		this(UUID.randomUUID().toString().replace(Constants.DASH, Constants.EMPTY_STRING), null, name, packageUnit, packageSize, stock);

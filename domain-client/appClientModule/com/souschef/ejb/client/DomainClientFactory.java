@@ -8,12 +8,12 @@ import javax.naming.NamingException;
 import com.ibm.rmi.javax.rmi.PortableRemoteObject;
 import com.souschef.domain.client.ComponentManager;
 import com.souschef.domain.client.ComponentManagerRemote;
-import com.souschef.domain.client.RecypeManager;
-import com.souschef.domain.client.RecypeManagerRemote;
+import com.souschef.domain.client.RecipeManager;
+import com.souschef.domain.client.RecipeManagerRemote;
 
 public class DomainClientFactory {
 	private ComponentManager componentManager;
-	private RecypeManager recypeManager;
+	private RecipeManager recipeManager;
 	InitialContext context ;
 	
 	public DomainClientFactory() throws NamingException {
@@ -59,8 +59,8 @@ public class DomainClientFactory {
 	}
 	
 
-	public RecypeManager getRecypeManager() throws ClassCastException, NamingException {
-		if (recypeManager == null) {
+	public RecipeManager getRecipeManager() throws ClassCastException, NamingException {
+		if (recipeManager == null) {
 			/*
 			 	Short form remote interfaces and homes
 			 		https://www.ibm.com/support/knowledgecenter/en/SSAW57_8.0.0/com.ibm.websphere.nd.doc/info/ae/ae/cejb_bindingsejbfp.html 		 
@@ -71,10 +71,10 @@ public class DomainClientFactory {
 			 	Generate stubs
 			 		https://www.ibm.com/support/knowledgecenter/en/SSAW57_8.5.5/com.ibm.websphere.nd.doc/ae/rejb_3stubscmd2.html
 			 */
-			recypeManager  = (RecypeManagerRemote) portableRemoteObject.narrow(context.lookup("com.souschef.domain.client.RecypeManagerRemote"), RecypeManagerRemote.class);
+			recipeManager  = (RecipeManagerRemote) portableRemoteObject.narrow(context.lookup("com.souschef.domain.client.RecipeManagerRemote"), RecipeManagerRemote.class);
 			
 		}
 		
-		return recypeManager;
+		return recipeManager;
 	}	
 }

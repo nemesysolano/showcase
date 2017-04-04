@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import org.junit.BeforeClass;
@@ -19,14 +18,14 @@ import org.junit.runners.Suite.SuiteClasses;
 import com.souschef.domain.data.model.Component;
 import com.souschef.domain.data.model.ComponentCategory;
 import com.souschef.domain.data.model.Ingredient;
-import com.souschef.domain.data.model.Recype;
+import com.souschef.domain.data.model.Recipe;
 import com.souschef.domain.data.model.Unit;
 
 @RunWith(Suite.class) //718-065-089
 @SuiteClasses(
 	{		
 		ComponentManagerTest.class,
-		RecypeManagerTest.class
+		RecipeManagerTest.class
 	}
 )
 public class DomainModelTestSuite  {
@@ -158,7 +157,7 @@ public class DomainModelTestSuite  {
 			);
 	}
 	
-	public static Recype[] recypes;
+	public static Recipe[] recipes;
 	
 	public static void createRecypes() throws IOException {
 		class IngredientList extends ArrayList<Ingredient> {
@@ -171,8 +170,8 @@ public class DomainModelTestSuite  {
 			}
 			
 		}
-		recypes = new Recype[] {
-			new Recype(
+		recipes = new Recipe[] {
+			new Recipe(
 				"Roasted Ribs", 
 				1, 
 				new File("images/roasted-ribs.jpg"),
@@ -183,7 +182,7 @@ public class DomainModelTestSuite  {
 				).append(
 					new Ingredient(3, new Component("Ground Pepper"), Unit.GRAM)
 				).append(
-					new Ingredient(6, new Component("Rib"), Unit.GRAM)
+					new Ingredient(6, new Component("Garlic"), Unit.GRAM)
 				).append(
 					new Ingredient(0.25, new Component("Teriyaki Sausage"), Unit.LITRE)
 				)
